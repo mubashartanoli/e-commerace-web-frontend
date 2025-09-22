@@ -1,0 +1,115 @@
+import React, { useEffect, useState } from 'react';
+import CartSlider from '../CartDiv/CartSlider';
+import InfoStart from './InfoStart';
+import Button from '@mui/material/Button';
+import RelatedProduct from './RelatedProduct';
+import ProductDescription from './ProductDescripton';
+import { useContext } from "react";
+import { MyContext } from '../../App';
+import Review from './Review';
+import RecentlyViewed from './RecentlyViewed';
+import { useParams } from 'react-router-dom';
+import {getDataById,fetchDataFromApi,postData} from '../../utils/api';
+
+const ProductDetail = () => {
+  const Context=useContext(MyContext);
+   const setProgress=Context.values.setProgress
+ const [Active ,setActive]= useState('One')
+ const {id}=useParams();
+const [ProductData,setProductData]=useState();
+const [RelatedProductData,setRelatedProductData]=useState([]);
+const [RecentlyViewedProduct,setRecentlyViewedProduct]=useState([]);
+const UserId=localStorage.getItem('UserId')
+useEffect(()=>{
+  window.scrollTo(0, 0);
+setProgress(25);
+   getDataById(`/api/product/getProduct/${id}`).then((data)=>{
+       setProductData(data.Product);
+  
+      // localStorage.getItem('userId')
+         fetchDataFromApi(`/api/product/get/related/product/${data.Product.subCatagory._id}`).then((data)=>{
+     const filteredData = data.Product.filter(item => item._id !== id);
+     setProgress(60);
+        setRelatedProductData(filteredData);
+
+       
+       }).catch((err,res)=>{
+          console.log(res)
+    console.error('Error fetching related products:', err);
+       })
+
+
+
+postData('/api/product/create/recently/viewed',{productId:id ,userId:UserId}).then((res)=>{
+
+  setProgress(80);
+  fetchDataFromApi(`/api/product/get/recently/viewed?userId=${UserId}`).then((data)=>{
+   setProgress(100);
+   const filterRecent= data.Product.filter(item => item.productId._id !== id);
+    setRecentlyViewedProduct(filterRecent);
+  
+  }).catch((err,res)=>{
+          console.log(res)
+    console.error('Error fetching recently viewed products:', err);
+       })
+}).catch((err,res)=>{
+          console.log(res)
+    console.error('Error creating recently viewed products:', err);
+       })
+ 
+    
+     
+   }).catch((error,res)=>{
+  console.log(res)
+    console.error('Error fetching products:', error);
+    setProgress(100);
+   });
+},[id,setProgress,UserId])
+   
+ 
+    return (
+        <>
+           <div className='ProductDetailDiv pt-5'> 
+           <div className=' container ProductDetailDivCont p-5  bg-white'>
+<div className='productDetailInfoWarpper'>
+    {/* slider start  */}
+    <div className='product_DetailSlider_Warpper  '>
+
+    <CartSlider data={ProductData}/>
+  </div>
+    {/* slider end  */}
+        {/* info start  */}
+      <div className='product_Detail_Info_Warpper'>   < InfoStart data={ProductData}/>
+    </div>
+
+    {/* info end  */}
+
+   
+  </div></div>
+
+    <div className='productDetailTableWapper container mt-5 p-5 bg-white'>
+      <div className='productDetailTableButton'>
+      <Button className={Active==='One'&&'TableButton_Active' } onClick={()=>{setActive('One')}}>Description</Button>
+
+     <Button className={Active==='Two'&&'TableButton_Active' }  onClick={()=>{setActive('Two')}}>Reviews (1)</Button>
+      </div>
+      { Active==='One' && <ProductDescription data={ProductData}/>}
+
+      { Active==='Two' && <Review data={ProductData}/>}
+
+
+
+
+
+    </div>
+
+
+         <RelatedProduct data={RelatedProductData} />
+          <RecentlyViewed data={RecentlyViewedProduct} />
+
+              </div>
+        
+        </>)
+}
+
+export default ProductDetail;

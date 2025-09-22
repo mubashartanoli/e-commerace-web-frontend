@@ -1,0 +1,4 @@
+
+    {
+        "css.enabledLanguages": ["./style.css" ,"bootstrap/dist/css/bootstrap.min.css"]
+      }
