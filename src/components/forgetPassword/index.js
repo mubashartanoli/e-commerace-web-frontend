@@ -5,46 +5,76 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {Link} from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom';
 import { MdOutlineClose } from "react-icons/md";
 import { useForm } from "react-hook-form"
-// import { useState } from 'react';
+import { useState ,useContext} from 'react';
+import {MyContext} from '../../App.js'
+import { postData } from '../../utils/api';
+import background from '../../images/pattern.jpg';
+import Tablet from '../../images/patternForTablet.jpg';
+import Phone from '../../images/patternForPhone.jpg';
+
 
 
 const ForgetPassword =()=>{
-      // eslint-disable-next-line no-undef
+  const navigate=useNavigate()
+    const Context=useContext(MyContext)
+    const setProgress=Context.values.setProgress;
+    const setOpen=Context.values.setOpen;
+  const [reLoading,setReLoading]=useState(false);
      
 
   const {
   register,
   handleSubmit,
-  // watch,
-  formState: { errors,isSubmitting},
+  formState: { errors},
   } = useForm()
-  const delay = async (d)=>{
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve();
-      }, d *1000);
-    });
-  }
+
   const onSubmit =async(data) => {
-    // eslint-disable-next-line no-undef
-
-     let r= await fetch('http://localhost:4000/login/',{ 
-     method: "POST",
-
-  headers: {"Content-Type": "application/json",},
-
-  body: JSON.stringify(data),
-})
-
-  let res= await r.text()
-    await delay(1)
-    console.log(data,res)
+    setReLoading(true);
+    setProgress(25)
+    console.log(data.email);
+localStorage.setItem('UserEmail',data.email)
+    postData('/api/auth/resendOTP',data).then((res)=>{
+  if(res.success===false ){
+      setReLoading(false)
+  setOpen({
+       status:true,
+       color:'#fa3e3e',
+       data:res.message
+     })
+setProgress(100)
+return;
+  }
+  localStorage.setItem('OTPEXP',res.OTPEXP);
+  localStorage.setItem('isAction','Reset Password');
+  setProgress(75)
+  setTimeout(() => {
+    setReLoading(false)
+    setProgress(100);
+    navigate('/VerifyOtp')
+  }, 1000);
+    }).catch((err)=>{
+       console.log(err);
+   setOpen({
+       status:true,
+       color:'#fa3e3e',
+       data:'NetWork Err Please Try Again Later...'
+     })
+     setReLoading(false)
+  setProgress(100)
+    })
 }
   
     return(<>
+      <div className='BackGround-Image'>
+         <picture>
+      <source media="(max-width: 450px)" srcSet={Phone} />
+      <source media="(max-width: 800px)" srcSet={Tablet}/>
+      <img src={background} alt='Background img'/>
+    </picture>
+  </div>
         <div className="SignUpForm container-fluid">
         <div className='SignUpFormWapper'>
           <div className='logo_Wrapper d-flex align-items-center justify-content-center'>
@@ -53,7 +83,7 @@ const ForgetPassword =()=>{
            </div>
          
            </div>
-          <h1>RESET PASSWORD</h1>
+          <h1>Enter Your Email </h1>
      
         
         <div className='Form w-100'>
@@ -80,12 +110,12 @@ const ForgetPassword =()=>{
      className='w-100 mt-0  ' />
 
      
-     <TextField id="standard-basic" label="Phone Number"  variant="standard" {...register("PhoneNumber",{ required: true ,minLength:10, })} className='w-100 mt-0 ' />
-        
-    
+ 
     
 
-    <Button className='Submit'><input disabled={isSubmitting} className='Submit_btn' type="Submit" value={isSubmitting ? "PROCESSING...": "GET LINK"} /></Button>
+    <Button className='Submit' disabled={reLoading} type="Submit">
+      {reLoading ? "PROCESSING...": "GET LINK"}
+    </Button>
     </Box>
      
             
@@ -103,7 +133,7 @@ const ForgetPassword =()=>{
                     </Button>
                   </div>
         </div>
-{errors.PhoneNumber && <div className='required-Error-div'>PhoneNumber field is required.</div>}
+
 {errors.email && <div className='required-Error-div'>Invalid email address</div>}
        </div>
 

@@ -54,7 +54,9 @@ allCatagory && allSubCatagory && allCatagory.length>0 && allSubCatagory.length >
             .map((subItem)=>{ 
               
                return(
-                  <li className={`list-block ${SubCatagoryId===subItem._id&& '_Active-Sub-Cat-Menu'}`} key={subItem._id}><Button className="subnavBtn" onClick={() => setSubCatagoryId(subItem._id)}>  <Link to={`/Shop/${item._id}`}>{subItem.name}</Link> </Button> </li>  
+                  <li className={`list-block ${SubCatagoryId===subItem._id&& '_Active-Sub-Cat-Menu'}`} key={subItem._id}>
+                    <Button className="subnavBtn" onClick={() => setSubCatagoryId(subItem._id)}> 
+                         <Link to={`/Shop/${item._id}`}>{subItem.name}</Link> </Button> </li>  
                )
             })
 

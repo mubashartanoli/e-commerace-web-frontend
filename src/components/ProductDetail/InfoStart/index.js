@@ -11,11 +11,14 @@ import ViewListIcon from '@mui/icons-material/ViewList';
 import DiscountIcon from '@mui/icons-material/Discount';
 import PriceChangeIcon from '@mui/icons-material/PriceChange';
 import ShopIcon from '@mui/icons-material/Shop';
-
+import { useContext } from "react";
+import { MyContext } from '../../../App';
 
 
 const InfoStart =(props)=>{
-
+  const Context=useContext(MyContext);
+   const setProductSize=Context.values.setProductSize
+   const setProductColor=Context.values.setProductColor
 
     return(<>
 
@@ -81,7 +84,7 @@ const InfoStart =(props)=>{
   <h5 className=' mb-0'>Size </h5> 
   <span>:</span>
   <div className='_colour_Btn' >
-    <ProductSizeButton/>
+    <ProductSizeButton data={props.data!==undefined && props.data.size} act={setProductSize} />
   </div>
 </div>
           
@@ -90,7 +93,7 @@ const InfoStart =(props)=>{
   <h5 className=' mb-0' >Colour </h5> 
   <span>:</span>
   <div className='_colour_Btn' >
-    <ProductSizeButton/>
+    <ProductSizeButton data={props.data!==undefined && props.data.color} act={setProductColor} />
   </div>
 </div>
           

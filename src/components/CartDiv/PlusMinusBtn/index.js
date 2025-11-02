@@ -1,13 +1,18 @@
 import React from "react";
-import { useState } from "react";
+// import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import { FaMinus } from "react-icons/fa";
 import Button from '@mui/material/Button';
 
+import { useContext } from "react";
+import { MyContext } from '../../../App';
 
 
 const PlusMinusBtn= ()=>{
-        const [number, setNumber] = useState(1);
+      const Context=useContext(MyContext);
+   const setNumber=Context.values.setNumber
+   const number=Context.values.number
+      
       
         const plus=()=>{
             setNumber(number+1)

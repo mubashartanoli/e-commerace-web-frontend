@@ -47,31 +47,25 @@ return data;
 
 
 export const updateData=async(url,formData)=>{
-    try{
+    
       const {data}=  await axios.put(`${env.API_URL}${url}`, formData, {
   headers: {
     Authorization: `${BAREAR_TOKEN} ${token}`,
   },
 })
        return data;
-    }catch(error){
-        console.log(error);
-    return error; 
-    }
+   
 }
 
 export const deleteData=async(url)=>{
-    try{
+  
       const{data}=  await axios.delete(`${env.API_URL}${url}`, {
    headers: {
     Authorization: `${BAREAR_TOKEN} ${token}`,
   },
 })
        return(data); 
-    }catch(error){
-        console.log(error);
-    return error; 
-    }
+   
 // console.log(url)
 }
 

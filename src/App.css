@@ -1,23 +1,27 @@
 @import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
 
 @import url("https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap");
-
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&display=swap');
 @import url("https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css");
 @import url("https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css");
 
 * {
   margin: 0;
   padding: 0;
-  font-family: "Dosis", sans-serif;
+   font-family: "Inconsolata", monospace;
+  /* font-family: "Dosis", sans-serif; */
   font-size: 14px;
 }
 :root {
   --Background: #7958b6;
+  --Background-blur: #7958b652;
   --Background-rgb: #af99d8;
   --Background-dark: #5117bf;
   --Background-rgba: #7b55c121;
   --Black: #000000ac;
   --gray: #5656569d;
+  --white:#ffffff
+  --SideBarBtnColor:rgb(87 77 74)
 }
 ._Padding {
   padding: 0 50px;
@@ -201,13 +205,16 @@ aside .top-strip {
 .header-search {
   border-radius: 5px;
   padding: 10px;
-  margin-left: 10px;
-  margin-right: 5px;
-  width: 70%;
+  width: 100%;
   height: 60px;
   background-color: var(--Background-rgba);
+  position: relative;
 }
-
+.header_search_Wapper{
+      margin-left: 10px;
+     margin-right: 5px;
+     width: 70%;
+}
 .header-search > input {
   width: 100%;
   height: 40px;
@@ -322,10 +329,11 @@ aside .top-strip {
   right: -3px;
 }
 
-.part3 > .cart > span {
+.part3 > .cart > p {
   font-size: 16px;
-  font-weight: 700px;
+     font-weight: 600 !important;
   cursor: pointer;
+  color: var(--Background-dark);
 }
 
 .catagoryBtn {
@@ -1226,7 +1234,7 @@ aside .top-strip {
   outline: none;
 }
 .Cart_Submit_Form {
-  width: 100%;
+  width: 105%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1559,46 +1567,59 @@ aside .top-strip {
   font-weight: 600;
   line-height: 25px;
 }
+.productDetailReview .ShowReview{
+  width: 10%;
+}
 .productDetailReview .ShowReview > .image-warpper {
-  height: 100px !important;
-  width: 100px !important;
+  height: 70px !important;
+  width: 70px !important;
   background-color: var(--Background-rgba);
   border-radius: 50%;
   overflow: hidden;
   border: 0.5px solid #e4e5ee;
 }
-.productDetailReview > .row .rating {
-  margin-top: 15px;
-}
+
 .productDetailReview > .row .rating .css-1ckov0h-MuiSvgIcon-root {
-  height: 20px !important;
-  width: 20px !important;
+  height: 30px !important;
+  width: 30px !important;
 }
 .productDetailReview > .row .accountName {
-  margin-top: 10px;
+
   display: flex;
   cursor: pointer;
 }
-.productDetailReview > .row .accountName > h4 {
-  font-size: 18px;
-  font-weight: 600;
-  line-height: 20px;
+.productDetailReview > .row .accountName > h3 {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 30px;
   color: #000;
 }
-.productDetailReview > .row .accountName > span {
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 18px;
+.productDetailReview > .row .accountName > p {
+  font-size: 17px;
+  font-weight: 600;
+ margin: 5px 0 0 10px;
   color: #03030370;
 }
 
-.productDetailReview > .row .ShowReviewMassege {
-  font-size: 15px;
-  font-weight: 500;
+ .ShowReviewMassege {
+  margin-top: 10px;
+  padding: 10px ;
+  width: 100%;
+  background-color: var(--Background-rgba);
+ margin-bottom: 10px;
   line-height: 25px;
+  border-radius: 5px;
+}
+.ShowReviewMassege p{
+  font-size: 17px;
+  font-weight: 500;
+  margin-bottom: 0;
 }
 .AddProductReview {
   border-bottom: 0.5px solid var(--Background-dark);
+}
+.productDetailReviewBorder{
+  border-bottom: 1px solid var(--Background-dark);
 }
 .AddProductReview > h3 {
   font-size: 18px;
@@ -1610,8 +1631,8 @@ aside .top-strip {
   > form
   > .rating
   .css-1ckov0h-MuiSvgIcon-root {
-  height: 25px !important;
-  width: 25px !important;
+  height: 70px !important;
+  width: 70px !important;
 }
 .AddProductReview > .AddProductReviewForm > form {
   display: flex;
@@ -2021,10 +2042,13 @@ margin-top: 30px;
   overflow: hidden;
 }
 .SignUpForm > .SignUpFormWapper > .Form .Submit {
+      padding: 8px;
+    font-size: 17px;
+    font-weight: 700;
   margin-top: 10px !important;
   width: 100%;
   margin: 0;
-  padding: 0;
+
   background-color: var(--Background-dark) !important;
   color: white;
 }
@@ -2204,30 +2228,6 @@ margin-top: 30px;
   left: 0;
 }
 
-/* .Bottom_Nav{
-    opacity: 1;
-visibility: inherit;
-display: flex;
-
-  color: var(--gray);
-  padding: 5px 0;
-  height: 60px;
-  position: fixed;
- bottom: 0;
-  left: 0;
- box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.209);
- z-index: 1000;
- background-color: white;
-}
-.Bottom_Nav ul{
-    list-style: none;
-    width: 100%;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-} */
 .Bottom_Nav ul li {
   display: inline-block;
   width: 20%;
@@ -2486,4 +2486,778 @@ border-radius: 10px;
 
 .css-1qvx674-MuiPaper-root-MuiAlert-root{
   background-color: #ffffff00 !important;
+}
+.Button_Div .Quantity-btn .css-1wxecgq-MuiCircularProgress-root{
+      width: 30px !important;
+    height: 30px !important;
+    color: var(--Background);
+}
+.delete_Cart .css-1wxecgq-MuiCircularProgress-root{
+      width: 30px !important;
+    height: 30px !important;
+    color: var(--Background);
+}
+.Cart_Submit_Form .css-1wxecgq-MuiCircularProgress-root{
+      width: 30px !important;
+    height: 30px !important;
+    color: var(--Background-dark);
+}
+.cartnotfound h1{
+  color: var(--Background);
+}
+.Account-btn-subMenu{
+  position: absolute;
+    top: 80%;
+    left: -10%;
+    background-color: white;
+  box-shadow: var(--bs-box-shadow) !important;
+
+  border-radius: 10px;
+  z-index: 1000;
+  overflow: hidden;
+  height: 0;
+  padding: 0;
+  transition: all 1s ease;
+  display: none;
+}
+.Show-Account-btn-subMenu{
+display: block !important;
+height: auto !important;
+
+} 
+.Account-btn-subMenu ul{
+  list-style: none;
+  margin: 0 ;
+  padding: 0;
+}
+.Account-btn-subMenu ul li{
+  padding: 5px;
+  width: 150px;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 5px;
+  border-radius: 2px;
+  color: var(--Black);
+  cursor: pointer;
+}
+.Account-btn-subMenu ul li:hover{
+  background-color: var(--Background-rgba);
+  color: var(--Background);
+}
+.Account-btn-subMenu ul li svg{
+  font-size: 25px;
+}
+.Delete-Review-Div{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+.Delete-Review-Div .Edit{
+  min-width: 100px;
+    height: 35px;
+    width: 100px;
+    background-color: #ddfbe9;
+    color: #1a9f53;
+    margin-bottom: 5px;
+}
+.Delete-Review-Div .Delete{
+     min-width: 100px;
+    height: 35px;
+    width: 100px;
+    background-color: #ffdfe4;
+    color: #f11133;
+}
+
+.Delete-Review-Div .Btn> svg{
+  margin-right: 10px;
+}
+.Delete-Review-Div .Btn ._text{
+  font-size: 15px;
+  font-weight: 500;
+}
+.AdminReply{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.AdminReply .ReplyWapper{
+  width: 80% !important;
+}
+.account-name-wapper{
+  width: 75%;
+}
+.Delete-Review-Div{
+  width:15% ;
+}
+.DeleteBestSellingProductDialogDelete{
+  width: 450px;
+}
+.DeleteBestSellingProductDialogUpdate{
+  width: 550px;
+}
+.DeleteBestSellingProductDialog {
+    padding: 35px;
+    text-align: center;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 10px;
+}
+.DeleteBestSellingProductDialogLight {
+    background-color: var(--white) !important;
+    color: var(--SideBarBtnColor) !important;
+}
+.DeleteBestSellingProductDialogTopIconDiv {
+    position: absolute;
+    height: 80px;
+    width: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+       background-color: #ffffff !important;
+    color: rgb(87 77 74) !important;
+    border-radius: 50%;
+}
+.DeleteBestSellingProductDialogTopIconDiv svg {
+    border-radius: 50%;
+    color: #f11133;
+    font-size: 45px;
+    height: 60px;
+    line-height: 80px;
+    text-align: center;
+    text-shadow: 0 7px 10px #0000001f;
+    width: 60px;
+}
+.css-10d30g3-MuiPaper-root-MuiDialog-paper {
+    overflow: visible !important;
+    border-radius: 12px !important;
+}
+.DeleteBestSellingProductDialog h3 {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 30px;
+}
+.DeleteBestSellingProductDialog h2 {
+    margin-top: 15px;
+    font-weight: 800;
+    font-size: 24px;
+    line-height: 30px;
+}
+.DeleteBtn {
+    width: 90px;
+    height: 50px;
+    border-radius: 10px !important;
+    background-color: #dc3545 !important;
+    color: white !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    line-height: 19px !important;
+}
+.CancelBtn {
+    width: 90px;
+    height: 50px;
+    border-radius: 10px !important;
+    background-color: #6c757d !important;
+    color: white !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    line-height: 19px !important;
+}
+
+/* textfield */
+.css-zsp0bh-MuiInputBase-root-MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline{border-color:var(--Background) !important;}
+.css-zsp0bh-MuiInputBase-root-MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline
+ {
+    border-color:var(--Background) !important;
+} 
+ .css-1ll44ll-MuiOutlinedInput-notchedOutline{
+  border-color:var(--Background-rgb) !important;
+}
+.css-113d811-MuiFormLabel-root-MuiInputLabel-root.Mui-focused{
+  color:var(--Background) !important;}
+.Update-rating_ {
+  margin-bottom: 15px;
+}
+.Update-rating_ .css-1ckov0h-MuiSvgIcon-root {
+    height: 70px !important;
+    width: 70px !important;
+}
+.css-1wxecgq-MuiCircularProgress-root {
+  width: 30px !important;
+  height: 30px !important;
+  color: #1a9f53 !important;
+}
+.google-login-btn .css-1wxecgq-MuiCircularProgress-root{
+  color: var(--Background) !important;
+}
+.ProceedToCheckOut .FlexDiv{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.ProceedToCheckOutLeftPart{
+  margin: 1% 0.5% 1% 0;
+  width: 60%;
+box-sizing: border-box;
+background-color: var(--Background-rgba);
+border-radius: 10px;
+}
+.ProceedToCheckOutRightPart{
+      border: 0.5px solid var(--Background);
+  margin: 1% 0 1% 0.5% ;
+  width: 38%;
+box-sizing: border-box;
+background-color: var(--Background-rgba);
+border-radius: 10px;
+}
+.ProceedToCheckOutCoupenDiv{
+  margin-bottom: 10px;
+  box-sizing: border-box;
+background-color: var(--Background-rgba);
+border-radius: 10px;
+font-size: 18px ;
+font-weight: 600;
+color: var(--Black);
+}
+.ProceedToCheckOutCoupenDiv svg{
+  width: 25px;
+  height: 25px;
+  margin-right:10px;
+}
+.ProceedToCheckOutCoupenDiv span{
+ font-size: 18px ;
+font-weight: 600;
+cursor: pointer;
+}
+.ProceedToCheckOutCoupenDiv span:hover{
+text-decoration: underline;
+color: var(--Background);
+}
+.ProceedToCheckOutRightPart .headding {
+    width: 100%;
+    border-bottom: 0.5px solid var(--Background);
+}
+.AddToCoupen .css-16wblaj-MuiInputBase-input-MuiOutlinedInput-input{
+  background-color: var(--Background-rgba) !important;
+}
+.ProceedToCheckOutLeftPart .css-16wblaj-MuiInputBase-input-MuiOutlinedInput-input{
+  background-color:white !important;
+}
+.AddToCoupen .AddToCoupenSubmitBtn{
+  margin-top: 10px !important;
+  padding: 10px 25px !important;
+  background-color: var(--Background) !important;
+  color: white !important;
+}
+.NameInputWapper{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+.NameInputWapper > div{
+width: 49%;
+}
+.ProceedToCheckOutLeftPart .css-cmpglg-MuiFormControl-root-MuiTextField-root{
+  margin-top: 10px !important;
+}
+.ProceedToCheckOutLeftPart
+ .css-1n04w30-MuiInputBase-root-MuiOutlinedInput-root{
+    background-color: white !important}
+
+.ProceedToCheckOutLeftPart 
+.css-1dune0f-MuiInputBase-input-MuiOutlinedInput-input{
+    background-color: white !important;}
+.ProceedToCheckOutLeftPart 
+.css-1blp12k-MuiInputBase-root-MuiOutlinedInput-root {
+    background-color: white;}
+.ProceedToCheckOutLeftPart{
+      height: 350px;
+  border: 0.5px solid var(--Background);
+}
+.ProceedToCheckOutPTable{
+  width: 100%;
+  overflow: hidden;
+}
+.ProceedToCheckOutPTable table{
+  width: 100%;
+}
+.ProceedToCheckOutPTable table tbody{
+  border-bottom: 0.5px solid var(--Background);
+}
+.ProceedToCheckOutPTable table thead{
+  background-color: var(--Background);
+   color: var(--white) ;
+}
+.ProceedToCheckOutPTable table tbody td{
+  padding: 5px 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--Black);
+}
+.ProceedToCheckOutPTable table thead td{
+  padding: 5px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: white;
+}
+.ProceedToCheckOutPTable table thead td div{
+
+  font-size: 18px;
+  font-weight: 600;
+
+}
+.ProceedToCheckOutPTable table tbody tr{
+  border-bottom: 0.5px solid var(--Background);
+}
+.ProceedToCheckOutPTable table tbody td div{
+
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--Black);
+}
+.ProceedToCheckOutPTable .ProToCheckOutPImage{
+  width: 40px;
+  height: 40px;
+  background-color: violet;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.Totals_Div_proceed{
+  font-size: 18px;
+  font-weight: 600;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--Background) !important;
+}
+.Totals_Div_proceed p{
+  margin-bottom: 0 !important;
+}
+
+.OrderTableWrapper{
+  min-width: 1000px;
+  max-width: 1500px;
+  
+}
+.OrderTableWrapper > table{
+  width: 100%;
+}
+.OrderTableWrapper > table thead tr {
+  background-color: var(--Background);
+  border-radius: 10px;
+}
+.OrderTableWrapper > table thead tr td{
+
+  color: white;
+  padding: 10px ;
+  font-size: 16px;
+  font-weight: 600;
+}
+.OrderTableWrapper > table tbody tr{
+  border-bottom: 1px solid var(--Background);
+}
+.OrderTableWrapper > table tbody tr td{
+padding: 10px ;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--Black);
+  cursor: pointer;
+}
+.OrderTableContainer{
+  width: 70px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: start;
+}
+.OrderTableBodyContainer{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  flex-direction: column;
+}
+.OrderTableContainer > .imgWapper{
+  margin: 5px 0;
+  width: 50px;
+  height: 50px;
+  background-color: violet;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.OrderTableBodyContainer > .NameWapper{
+  margin: 5px 0;
+  width: 100%;
+  height: 50px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+ 
+}
+
+.OrderTableBodyContainer > .NameWapper>p{
+  margin-bottom: 0;
+  
+}
+.OrderTableBodyContainer > .hoverWapper>p{
+  margin-bottom: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+.OrderTableBodyContainer > .hoverWapper :hover{
+  color: var(--Background);
+  text-decoration: underline;
+}
+.PendingStatusBtn{
+  width: 90%;
+  padding: 6px;
+  border-radius: 50px;
+  background-color: rgba(0, 253, 198, 0.322);
+  color:  white;
+  font-size: 17px;
+  font-weight: 700;
+}
+._Pending{
+  width: 90%;
+  background-color: #07ffac80 ;
+  color: #00bd7e;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 40px;
+}
+._confirmed {
+    width: 90%;
+    background-color: #a735dc70;
+    color: #a735dc;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 40px;
+}
+._shipped b{
+color: var(--Background);
+}
+
+.WhilistCompProducts{
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(5,  minmax(200px, 1fr));
+  grid-template-rows: auto;
+  gap: 15px;
+}
+.Show-search-product-wapper{
+  position: absolute;
+  top: 110%;
+  left: 0;
+  background-color: white;
+  z-index: 1000;
+  border-radius: 10px;
+   box-shadow: 0 5px 1rem 1px var(--Background-blur);
+   height: 50vh;
+   overflow-x: hidden;
+   overflow-y: hidden;
+   padding: 10px 0;
+}
+.Show-search-product-wapper >div{
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.Show-search-product-wapper ul{
+  width: 100%;
+  list-style: none;
+  padding: 0;
+}
+.Show-search-product-wapper .Show-search-product{
+  width: 100%;
+  height: 80px;
+  margin: 5px 0;
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--Background);
+  cursor: pointer;
+}
+.Show-search-product-wapper .Show-search-product .image-Wapper{
+  width: 20%;
+  height: 100%;
+  display: flex;
+align-items: center;
+}
+.Show-search-product-wapper .Show-search-product .image-Wapper .image{
+ width: 70px;
+ height: 70px;
+ background-color: #0000006e;
+ border-radius: 50%;
+ margin-left: 10px;
+}
+.Show-search-product-wapper .Show-search-product .tittle-Wapper{
+  width: 80%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: space-evenly;
+  overflow: hidden;
+}
+.Show-search-product-wapper .Show-search-product .tittle-Wapper h4{
+  height: 1.5rem !important;
+overflow: hidden;
+ overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 75%;
+}
+.Show-search-product-wapper .Show-search-product .tittle-Wapper h5{
+  height: 1.5rem !important;
+  width: 95%;
+overflow: hidden;
+ overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.search-product-Not-Found{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.search-product-Not-Found h2{
+  height: 2rem;
+}
+.header-search .search-btn .css-1wxecgq-MuiCircularProgress-root {
+    width: 25px !important;
+    height: 25px !important;
+    color: var(--Background) !important;
+}
+.searchProductInPhone{
+  width: 95vw;
+  position: fixed;
+  top: 80px;
+  z-index: 10000;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  left: 50%;
+  border-radius: 5px;
+   box-shadow: 0 5px 1rem 1px var(--Background-blur);
+   display: flex;
+   height: 60px;
+   overflow: hidden;
+}
+.ClosesearchProductInPhone{
+  width: 15%;
+  height: 100%;
+  background-color: var(--Background-rgba);
+}
+.ClosesearchProductInPhone ._Close_Btn{
+  height: 100% !important;
+  background-color: transparent !important;
+  min-width: 100% !important;
+  width: 100%;
+color: white !important;
+}
+.ClosesearchProductInPhone  svg{
+  color: #000000ab;
+  height: 20px !important;
+  width: 20px !important;
+}
+.MyAccountTop {
+  width: 100%;
+  padding: 10px 0;
+}
+.MyAccountTop .css-1uent87-MuiButtonBase-root-MuiButton-root{
+width: 200px !important;
+min-width: 200px !important;
+padding: 10px !important;
+color: var(--Background);
+font-size: 16px !important;
+font-weight: 700 !important;
+}
+.MyAccountTop     .css-1uent87-MuiButtonBase-root-MuiButton-root:hover{
+  background-color: var(--Background) !important;
+  color: white !important;
+}
+.Profile-Info{
+  width: 100%;
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  padding: 10px 0;
+}
+.Profile-Info .Img-Side{
+  width: 30%;
+
+}
+.Profile-Info .Info-Side{
+  width: 70%;
+  padding: 10px 0;
+ 
+}
+.Profile-Info .Img-Side .Img-Wapper{
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-color: var(--Background);
+  margin-bottom: 10px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.Profile-Info .Img-Side .css-74d805-MuiButtonBase-root-MuiButton-root {
+    background-color: var(--Background);
+    min-width: 150px !important;
+    width: 150px !important;
+    height: 40px !important;
+    border-radius: 5px;
+}
+.ChangePassword .SubmitBtnDiv {
+    display: flex
+;
+    align-items: center;
+    justify-content: center;
+}
+.ChangePassword .SubmitBtnDiv Button {
+    background-color: var(--Background) !important;
+    color: white;
+    min-width: 100% !important; 
+    width: 100% !important;
+    height: 50px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 8px !important;
+}
+.ChangePassword .ChangePasswordTop h6 {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 19px;
+}
+.ChangePassword .ChangePasswordTop div hr {
+    color: var(--Background-rgb);
+    border-top: 1px solid var(--Background-rgb);
+}
+.MyAccountTop  .MyAccountTopBtnActive {
+    background-color: var(--Background) !important;
+    color: white !important;
+}
+
+.OtpVerificationDiv{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.OtpVerificationDiv h2{
+  margin-bottom: 0;
+  font-size: 22px;
+  font-weight: 800;
+ color: var(--Black);
+}
+.OtpVerificationDiv h5{
+  margin-bottom: 0;
+  font-size: 17px;
+  font-weight: 700;
+ color: var(--gray);
+}
+.OtpVerificationDiv h3{
+  color: var(--Black);
+  margin-bottom: 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+.OTPINPUT{
+  width: 100%;
+  padding: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.otp_input{
+border: 0.5px solid var(--gray) !important;
+outline: none;
+border-radius: 5px !important;
+color: var(--Background-dark);
+  width:45px;
+  height:45px;
+  text-Align:center;
+  font-Size:17px;
+}
+.otp_input:focus{
+  outline: auto;
+ border-color: var(--Background) !important;
+ outline-color: var(--Background) !important;
+}
+.OTPBtn{
+  width: 100% !important;
+  min-width: 100% !important;
+  padding: 10px !important;
+  margin-bottom: 10px !important;
+  font-size: 17px !important;
+  font-weight: 700 !important;
+}
+.OTPRE{
+  background-color: var(--Background-blur) !important;
+  color: var(--Background) !important;
+}
+
+.OTPSUB{
+  background-color: var(--Background) !important;
+  color: white !important;
+}
+.Otptimmer p{
+font-size: 16px;
+font-weight: 600;
+color: var(--Black);
+margin-bottom: 5px !important;
+}
+.Account-list-Side-Bar-show{
+  z-index: 100000 !important;
+  height: auto !important;
+  bottom: 58px !important;
+  display: block !important;
+}
+.Account-list-Side-Bar{
+box-shadow: 0 -0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+position: fixed;
+background-color: white;
+z-index: 0;
+height: 0;
+right: 10px;
+overflow: hidden;
+border-radius: 10px 10px 0 0;
+bottom: -580px;
+display: none;
+
+}
+.Account-list-Side-Bar ul li {
+    padding: 5px;
+    width: 150px;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 5px;
+    border-radius: 2px;
+    color: var(--Black);
+    cursor: pointer;
+}
+.Account-list-Side-Bar  ul li:hover {
+    background-color: var(--Background-rgba) !important;
+    color: var(--Background) !important;
+}
+.Account-list-Side-Bar ul li svg {
+    font-size: 25px;
+}
+.Account-list-Side-Bar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }

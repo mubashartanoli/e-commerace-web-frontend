@@ -42,7 +42,7 @@ const CartSlider= (props)=>{
                             <SwiperSlide key={index}>
               <div className="item">
               <div className="product-badges cursor"> <span className="badge style-1 onsale">24%</span> </div>
-              <InnerImageZoom  zoomType='hover' zoomScale={1}  src={image}/>
+              <InnerImageZoom  zoomType='hover' zoomScale={2}  src={image}/>
             </div>
           </SwiperSlide>
               )

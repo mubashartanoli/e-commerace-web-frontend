@@ -11,6 +11,7 @@ const AllCatagoryBtn = () => {
            const Context = useContext(MyContext);
             const allSubCatagory = Context.values.allSubCatagory;
          const allCatagory = Context.values.allCatagory;
+          const setSubCatagoryId = Context.values.setSubCatagoryId;
     const[showDiv , setShowDiv]= useState(false)
 
     
@@ -48,7 +49,9 @@ const AllCatagoryBtn = () => {
    allCatagory && allSubCatagory &&  allCatagory.length>0 && allSubCatagory.length > 0 && allSubCatagory.filter(subItem=> subItem.catagory._id === item._id)
     .map((subitem)=>{
         return(
- <li className="list-inline-item" key={subitem._id}> <Button className="navBtn">  <Link className='_ancher' to="/">{subitem.name}</Link> </Button> </li>
+ <li className="list-inline-item" key={subitem._id}>
+     <Button className="navBtn" onClick={() => setSubCatagoryId(subitem._id)}>  
+        <Link className='_ancher' to={`/Shop/${item._id}`}>{subitem.name}</Link> </Button> </li>
         )
     })
   }      

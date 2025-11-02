@@ -7,6 +7,7 @@ import ProductDescription from './ProductDescripton';
 import { useContext } from "react";
 import { MyContext } from '../../App';
 import Review from './Review';
+import AddReview from './AddReview';
 import RecentlyViewed from './RecentlyViewed';
 import { useParams } from 'react-router-dom';
 import {getDataById,fetchDataFromApi,postData} from '../../utils/api';
@@ -14,22 +15,31 @@ import {getDataById,fetchDataFromApi,postData} from '../../utils/api';
 const ProductDetail = () => {
   const Context=useContext(MyContext);
    const setProgress=Context.values.setProgress
- const [Active ,setActive]= useState('One')
+   const setProductData=Context.values.setProductDetaiData
+   const setproductReviewData=Context.values.setproductReviewData
+   const ProductData=Context.values.ProductDetailData
+   const setReviewLength=Context.values.setReviewLength
+   const reviewLength=Context.values.reviewLength
+   const setActive=Context.values.setActiveProductDetailBtn
+   const Active=Context.values.ActiveProductDetailBtn
+  
+
  const {id}=useParams();
-const [ProductData,setProductData]=useState();
+
+
 const [RelatedProductData,setRelatedProductData]=useState([]);
 const [RecentlyViewedProduct,setRecentlyViewedProduct]=useState([]);
 const UserId=localStorage.getItem('UserId')
 useEffect(()=>{
   window.scrollTo(0, 0);
 setProgress(25);
-   getDataById(`/api/product/getProduct/${id}`).then((data)=>{
-       setProductData(data.Product);
+   getDataById(`/api/product/getProduct/${id}`).then((response)=>{
+       setProductData(response.Product);
   
       // localStorage.getItem('userId')
-         fetchDataFromApi(`/api/product/get/related/product/${data.Product.subCatagory._id}`).then((data)=>{
+         fetchDataFromApi(`/api/product/get/related/product/${response.Product.subCatagory._id}`).then((data)=>{
      const filteredData = data.Product.filter(item => item._id !== id);
-     setProgress(60);
+     
         setRelatedProductData(filteredData);
 
        
@@ -38,22 +48,23 @@ setProgress(25);
     console.error('Error fetching related products:', err);
        })
 
+  
 
 
 postData('/api/product/create/recently/viewed',{productId:id ,userId:UserId}).then((res)=>{
 
-  setProgress(80);
+  setProgress(70);
   fetchDataFromApi(`/api/product/get/recently/viewed?userId=${UserId}`).then((data)=>{
    setProgress(100);
    const filterRecent= data.Product.filter(item => item.productId._id !== id);
     setRecentlyViewedProduct(filterRecent);
   
-  }).catch((err,res)=>{
-          console.log(res)
+  }).catch((err)=>{
+          
     console.error('Error fetching recently viewed products:', err);
        })
 }).catch((err,res)=>{
-          console.log(res)
+         
     console.error('Error creating recently viewed products:', err);
        })
  
@@ -64,8 +75,18 @@ postData('/api/product/create/recently/viewed',{productId:id ,userId:UserId}).th
     console.error('Error fetching products:', error);
     setProgress(100);
    });
-},[id,setProgress,UserId])
-   
+   fetchDataFromApi(`/api/review/getAll/${id}`).then((res)=>{
+      setproductReviewData(res.data)
+  
+      setReviewLength(res.data.length)
+     }).catch((err)=>{
+         
+    console.error('Error fetching product reviews:', err);
+       })
+
+},[id,setProgress,setProductData,UserId,setproductReviewData,setReviewLength])
+  
+
  
     return (
         <>
@@ -79,7 +100,7 @@ postData('/api/product/create/recently/viewed',{productId:id ,userId:UserId}).th
   </div>
     {/* slider end  */}
         {/* info start  */}
-      <div className='product_Detail_Info_Warpper'>   < InfoStart data={ProductData}/>
+      <div className='product_Detail_Info_Warpper'>   < InfoStart data={ProductData} />
     </div>
 
     {/* info end  */}
@@ -89,13 +110,15 @@ postData('/api/product/create/recently/viewed',{productId:id ,userId:UserId}).th
 
     <div className='productDetailTableWapper container mt-5 p-5 bg-white'>
       <div className='productDetailTableButton'>
-      <Button className={Active==='One'&&'TableButton_Active' } onClick={()=>{setActive('One')}}>Description</Button>
+      <Button className={Active==='One'&&'TableButton_Active' } onClick={()=>{setActive('One')}}>DESCRIPTION</Button>
 
-     <Button className={Active==='Two'&&'TableButton_Active' }  onClick={()=>{setActive('Two')}}>Reviews (1)</Button>
+     <Button className={Active==='Two'&&'TableButton_Active' }  onClick={()=>{setActive('Two')}}>REVIEWS ({reviewLength})</Button>
+     <Button className={Active==='Three'&&'TableButton_Active' }  onClick={()=>{setActive('Three')}}>ADD REVIEWS</Button>
       </div>
       { Active==='One' && <ProductDescription data={ProductData}/>}
 
       { Active==='Two' && <Review data={ProductData}/>}
+      { Active==='Three' && <AddReview />}
 
 
 

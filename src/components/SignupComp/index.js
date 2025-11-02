@@ -7,7 +7,7 @@ import {Link} from 'react-router-dom';
 // import googleicon from "../../images/google icon png.png"
 import { MdOutlineClose } from "react-icons/md";
 import { useForm } from "react-hook-form"
-import { GoogleOAuthProvider} from '@react-oauth/google';
+
 import { useState} from "react";
 import GoogleSignUp from '../GoogleSignUp';
 import FormControl from '@mui/material/FormControl';
@@ -18,15 +18,14 @@ import Input from '@mui/material/Input';
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import {  postData } from '../../utils/api.jsx';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import {MyContext} from '../../App'
-import background from '../../images/pattern.webp'
+import background from '../../images/pattern.jpg';
+import Tablet from '../../images/patternForTablet.jpg';
+import Phone from '../../images/patternForPhone.jpg';
 import env from 'react-dotenv';
 const TYPE = env.TYPE;
-
-
-const clientId = "437948893730-g9ab5skpep3ep575j0cgm14k6fadm1n0.apps.googleusercontent.com";
 
 
 
@@ -36,12 +35,12 @@ const clientId = "437948893730-g9ab5skpep3ep575j0cgm14k6fadm1n0.apps.googleuserc
 const SignupComp =()=>{
   const Context=useContext(MyContext)
     const setProgress=Context.values.setProgress;
-    const setIslogin=Context.values.setIslogin;
+    // const setIslogin=Context.values.setIslogin;
     const setOpen=Context.values.setOpen;
 const [isLoading,setIsLoading]=useState(false);
 
 
-//  const navigate=useNavigate()
+ const navigate=useNavigate()
 const {
 register,
 handleSubmit,
@@ -54,26 +53,38 @@ formState: { errors},
 const onSubmit =async(data) => {
   setIsLoading(true)
 setProgress(30)
-    console.log(data);
+  //  console.log(data.email);
+localStorage.setItem('UserEmail',data.email)
+localStorage.setItem('isAction','none');
 postData('/api/auth/signUp',{data ,accountType:TYPE}).then((res)=>{
- console.log(res.data)
-localStorage.setItem('UserId',res.data._id);
-localStorage.setItem('Token',res.token);
-setProgress(75)
-setIslogin(true);
+
+ if(res.success===false){
+    setOpen({
+       status:true,
+       color:'#fa3e3e',
+       data:res.message
+     })
+     return;
+ }
+if(res.success===true &&res.isVerify===false){
+  setProgress(75)
+  localStorage.setItem('OTPEXP',res.OTPEXP);
 setOpen({
        status:'true',
        color:'#7958b6',
-       data:'You Can SignUp Sucessfully'
+       data:'You Can be Register ...'
      })
 setTimeout(() => {
    setIsLoading(false)
-  setProgress(75)
- window.location.href='/'
-}, 2000);
+  setProgress(100)
+ navigate('/VerifyOtp')
+}, 1000);
+}
 
 
-})
+
+}
+)
  .catch((error)=>{
   setProgress(100)
   setOpen({
@@ -106,7 +117,11 @@ const password = watch('password');
 
 return(<>
   <div className='BackGround-Image'>
-    <img src={background} alt="background" />
+    <picture>
+      <source media="(max-width: 450px)" srcSet={Phone} />
+      <source media="(max-width: 800px)" srcSet={Tablet}/>
+      <img src={background} alt='Background img'/>
+    </picture>
   </div>
 <div className="SignUpForm container-fluid">
 <div className='SignUpFormWapper'>
@@ -212,7 +227,11 @@ onSubmit={handleSubmit(onSubmit)}
           />
         </FormControl>
 
-<Button className='Submit'><input className='Submit_btn' disabled={isLoading} type="Submit" value={isLoading ? "Creating..": "Create Account"} /></Button>
+    <Button disabled={isLoading} type="Submit" className='Submit'>
+      
+{isLoading ? "Creating..": "Create Account"}
+      
+</Button>
 </Box>
 {/* </form> */}
 </div>
@@ -228,9 +247,9 @@ onSubmit={handleSubmit(onSubmit)}
 <span> Sign Up With Google</span>
 </Button> */}
      {/* google login button */}
-<GoogleOAuthProvider clientId={clientId}>
+
       <GoogleSignUp />
-    </GoogleOAuthProvider>
+    
 
 
 

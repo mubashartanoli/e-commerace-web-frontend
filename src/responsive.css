@@ -9,11 +9,34 @@
 
 
 @media screen and (max-width: 800px){
+    .WhilistCompProducts{
+    grid-template-columns: repeat(3,  minmax(150px, 1fr));
+    gap: 5px;
+  }
+  .part3 > .cart > p{
+    display: none;
+  }
+  .ProceedToCheckOutRightPart{
+    width: 100%;
+  }
+  .ProceedToCheckOutLeftPart{
+    width: 100%;
+  }
+  .account-name-wapper {
+    width: 65%;
+}
+.productDetailReview .ShowReview {
+    width: 20%;
+}
   .downFooter >.Footer-Grid{
 
   grid-template-columns: repeat(4,  minmax(150px, 1fr));
 
 } 
+.Cart_Submit_Form {
+  width: 100%;
+
+}
 .Responsiv_nav_Tablet{
     display: none !important;
     height: 0 !important;
@@ -246,14 +269,104 @@ transform: translate(-100vw, 0px);
   grid-template-columns: repeat(3,  minmax(100px, 1fr));
 }
 }
-@media screen and (max-width: 800px) and (min-width: 500px){
-
-
+@media screen and (max-width: 390px) {
+  .otp_input{
+    width: 40px;
+    height: 40px;
+  }
 }
 
 
 
 @media screen and (max-width: 499px){
+      .Profile-Info{
+        flex-direction: column;
+        align-items: center;
+    }
+    .Profile-Info .Img-Side{
+        display: flex;    
+          width: 100%;
+        justify-content: center;
+    }
+    .Profile-Info .Info-Side{
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+        align-items: center;
+    }
+  .Show-search-product-wapper .Show-search-product .tittle-Wapper {
+    width: 75%;
+    justify-content: center;
+  }
+  .Show-search-product-wapper .Show-search-product .image-Wapper {
+    width: 25%;}
+    .Show-search-product-wapper .Show-search-product .image-Wapper .image {
+    width: 50px;
+    height: 50px;
+  }
+
+  .WhilistCompProducts{
+    grid-template-columns: repeat(2,  minmax(150px, 1fr));
+    gap: 5px;
+  }
+  .ProceedToCheckOutLeftPart{
+    height: 420px;
+  }
+  .NameInputWapper{
+    flex-direction: column;
+  }
+  .NameInputWapper >div{
+   width: 100%;
+  }
+  .Delete-Review-Div .Btn ._text {
+   display: none;
+}
+    .DeleteBestSellingProductDialog {
+        width: 98vw !important;
+    }
+    .productDetailReview .ShowReview {
+        width: 30%;
+    }
+    .account-name-wapper {
+        width: 57%;
+        padding: 0 !important;
+        overflow: hidden;
+    }
+    .productDetailReview > .row .accountName > h3{
+      width: 95% !important;
+      overflow: hidden;
+      margin-bottom: 0%;
+    }
+    .productDetailReview > .row .accountName > p{
+      width: 95% !important;
+      overflow: hidden;
+      margin: 0 0 5px 0;
+    }
+    .Delete-Review-Div {
+    width: 10%;
+    padding: 0 !important;
+    align-items: start;
+}
+.Delete-Review-Div .Edit {
+    min-width: 30px;
+    height: 30px;
+    width: 30px;
+    margin-bottom: 5px;
+}
+.Delete-Review-Div .Delete {
+    min-width: 30px;
+    height: 30px;
+    width: 30px;
+    margin-bottom: 5px;
+}
+.Delete-Review-Div .Btn svg {
+    margin:0 !important;
+}
+
+
+    .productDetailReview > .row .accountName {
+   flex-direction: column;
+}
   .downFooter >.Footer-Grid{
 
   grid-template-columns: repeat(3,  minmax(100px, 1fr));

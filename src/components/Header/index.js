@@ -11,8 +11,11 @@ import ResponsiveHeader from './responsiveHeader';
 import { useContext } from "react";
 import { MyContext } from '../../App';
 import BottomNav from "../BottomNav";
-// import { useState } from 'react';
-
+import { useState } from 'react';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import BookOnlineIcon from '@mui/icons-material/BookOnline';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import { IoLogOut } from "react-icons/io5";
 
 const Header= ()=>{
 
@@ -20,6 +23,16 @@ const navigate=useNavigate()
 const Context = useContext(MyContext);
   const  ShowSideBar  = Context.values.ShowSideBar;
   const  islogin  = Context.values.islogin;
+  const [show,setshow]=useState(false);
+const ShowSubMenu=()=>{
+    setshow(!show)
+}
+const IoLogOutTo=()=>{
+   localStorage.setItem('UserId','');
+localStorage.setItem('Token','');
+navigate('/LoginPage')
+setshow(false);
+}
 
 return(
 <>
@@ -54,21 +67,28 @@ return(
                 Context.CountryList?.length !== 0 && <CountryDropdown/>
             }
         </div>
-
+<div className='header_search_Wapper' >
+    
     <Searchheader/>
+</div>
     </div>
     {/* part2 end */}
     {/* part3 start */}
-    <div className=" part3  d-flex align-items-center col-sm-2">
+    <div className=" position-relative part3  d-flex align-items-center col-sm-2">
     {
-   islogin!==true ? <Button className='SIGNINBTN'><Link to={'/LoginPage'}> SIGN IN </Link></Button>:<Button className='ACCOIUNTbTN'><Link > <FiUser className='_icon'/> </Link></Button>
-    
-
+   islogin!==true ? <Button className='SIGNINBTN'><Link to={'/LoginPage'}> SIGN IN </Link></Button>:
+   <Button  className='ACCOIUNTbTN '
+   onClick={()=>{ShowSubMenu()}}> <FiUser className='_icon'/> </Button>
     }
-
-    {/* <Button className='SIGNINBTN'><Link to={'/LoginPage'}> SIGN IN </Link></Button>
-        <Button className='ACCOIUNTbTN'><Link to={'/LoginPage'}> <FiUser className='_icon'/> </Link></Button> 
-*/}
+    <div className={`Account-btn-subMenu ${show===true && 'Show-Account-btn-subMenu'}`}>
+<ul>
+    <li onClick={()=>{navigate('/MyAccount'); setshow(false)}} ><AccountCircleIcon/> Account page</li>
+    <li onClick={()=>{navigate('/Orders'); setshow(false)}}><BookOnlineIcon/> My Orders</li>
+    <li onClick={()=>{navigate('/Whilist'); setshow(false)}}><FavoriteIcon/> Whilist</li>
+    <li onClick={()=>{IoLogOutTo()}}><IoLogOut /> LogOut</li>
+</ul>
+    </div>
+  
     <HeaderCarts/>     
     
     {/* part3 end */}

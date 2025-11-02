@@ -7,7 +7,6 @@ import {Link} from 'react-router-dom';
 // import googleicon from "../../images/google icon png.png"
 import { MdOutlineClose } from "react-icons/md";
 import { useForm } from "react-hook-form"
-import { GoogleOAuthProvider} from '@react-oauth/google';
 import GoogleLogIn from '../GoogleLogInBtn';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -17,19 +16,20 @@ import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import {  postData } from '../../utils/api.jsx';
 import FormControl from '@mui/material/FormControl';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useContext ,useState} from "react";
 import { MyContext } from '../../App';
-import env from 'react-dotenv';
-import background from '../../images/pattern.webp'
-const clientId = "437948893730-g9ab5skpep3ep575j0cgm14k6fadm1n0.apps.googleusercontent.com";
+import env from 'react-dotenv'
+import background from '../../images/pattern.jpg';
+import Tablet from '../../images/patternForTablet.jpg';
+import Phone from '../../images/patternForPhone.jpg';
 const TYPE = env.TYPE;
 const LoginComp =()=>{
  const Context=useContext(MyContext)
     const setProgress=Context.values.setProgress;
-    const setIslogin=Context.values.setIslogin;
     const setOpen=Context.values.setOpen;
-  // const navigate=useNavigate()
+    const setIslogin=Context.values.setIslogin;
+  const navigate=useNavigate()
   const [isLoading,setIsLoading]=useState(false);
   const {
   register,
@@ -42,7 +42,45 @@ const LoginComp =()=>{
     setIsLoading(true)
 setProgress(25);
     console.log(data);
+   localStorage.setItem('UserEmail',data.email)
+   localStorage.setItem('isAction','none');
 postData('/api/auth/signIn',{data ,accountType:TYPE}).then((res)=>{
+  if(res.success===false ){
+      setIsLoading(false)
+  setOpen({
+       status:true,
+       color:'#fa3e3e',
+       data:res.message
+     })
+setProgress(100)
+return;
+  }
+  if(res.success===true&& res.isVerify===false){
+     localStorage.setItem('OTPEXP',res.OTPEXP);
+     setProgress(75)
+  setOpen({
+       status:true,
+       color:'#fa3e3e',
+       data:res.message
+     })
+setTimeout(() => {
+   setIsLoading(false)
+  setProgress(100)
+ navigate('/VerifyOtp')
+}, 1000);
+return
+  }
+  if(res.success===true && res.isBlocked){
+      setIsLoading(false)
+  setOpen({
+       status:true,
+       color:'#fa3e3e',
+       data:res.message
+     })
+setProgress(100)
+return
+  }
+ 
  setProgress(75)
  setIslogin(true)
 localStorage.setItem('Token',res.token);
@@ -57,12 +95,12 @@ setTimeout(() => {
 setProgress(100)
   window.location.href='/'
 }, 1500);
-
+  
 })
 .catch((error)=>{
   setIsLoading(false)
   setOpen({
-       status:false,
+       status:true,
        color:'#fa3e3e',
        data:'Err Contain, Please Check Your Email & Password Or Try Again'
      })
@@ -85,7 +123,11 @@ setProgress(100)
   };
     return(<>
       <div className='BackGround-Image'>
-    <img src={background} alt="background" />
+      <picture>
+      <source media="(max-width: 450px)" srcSet={Phone} />
+      <source media="(max-width: 800px)" srcSet={Tablet}/>
+      <img src={background} alt='Background img'/>
+    </picture>
   </div>
         <div className="SignUpForm container-fluid">
         <div className='SignUpFormWapper'>
@@ -150,7 +192,11 @@ setProgress(100)
         </FormControl>
  
       <div className='Forget-Password'><Link to="/ForgetPassword">Forget Password?</Link></div>
-    <Button className='Submit'><input disabled={isLoading} className='Submit_btn' type="Submit" value={isLoading ? "Signining..": "Sign In"} /></Button>
+    <Button disabled={isLoading} type="Submit" className='Submit'>
+      
+        {isLoading ? "Signining..": "Sign In"}
+      
+</Button>
 
     </Box>
             {/* </form> */}
@@ -165,9 +211,9 @@ setProgress(100)
               <img height='20px' src={googleicon} alt="" />
               <span> SIGN In With Google</span>
              </Button> */}
-             <GoogleOAuthProvider clientId={clientId}>
+             
       <GoogleLogIn />
-    </GoogleOAuthProvider>
+  
            </div>
                   <div className='Back-To-HomePage'>
                     <Button>

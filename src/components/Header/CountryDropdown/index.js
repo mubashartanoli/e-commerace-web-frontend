@@ -8,10 +8,13 @@ import { useContext } from "react";
 import { MyContext } from '../../../App';
 
 
+
 const CountryDropdown= () =>{
  
     const Context = useContext(MyContext);
-
+const cities=Context.values.CitiesList;
+const setselectedCityLocation =Context.values.setselectedCityLocation;
+const selectedCityLocation =Context.values.selectedCityLocation;
     const [isOpenModal, setIsOpenModal] = useState(false);
     const showDrop=()=>{
         setIsOpenModal(true);
@@ -21,49 +24,55 @@ const CountryDropdown= () =>{
     }
   
   const [selectedTab, setSelectedTab] = useState(null);
-  const [CountryList , setCountryList] = useState([]);
-  const [selectedCountry ,setselectedCountry] = useState('');
+  const [CitiesList , setCitiesList] = useState([]);
+  // const [selectedCountry ,setselectedCountry] = useState('');
  
-//  const countries=Context.values.CountryList
+
   const selectCountry=(index,country )=>{
+
     setSelectedTab(country);
-    // alert(selectedTab)
+  
     setIsOpenModal(false);
-    setselectedCountry(country);
-    setCountryList(Context.values.CountryList);
+    setselectedCityLocation(country);
+    setCitiesList(cities);
   }
 const showCountryListName=(text ,maxLength)=>{
 return text.length>maxLength? text.slice(0,maxLength)+'...': text;
 }
-// const ShowCountryListVar=showCountryListName
+
 const showCountryTitleName=()=>{
-if (selectedCountry !== ''){
- return showCountryListName(selectedCountry ,12)
-}else{
- return 'Select Location'
+
+ return showCountryListName(selectedCityLocation ,15)
+
 }
-}
-//  console.log(showCountryTitleName())
+
 
   useEffect(()=>{
-    setCountryList(Context.values.CountryList);
+    if(cities===null || cities===''){
+      return;
+    }
 
-  },[Context.values.CountryList])
+    setCitiesList(cities);
+
+  },[cities])
 
   const filterList=(e)=>{
+    if(e.target.value===''&&cities!==null){
+setCitiesList(cities);
+return
+    }
     const searchText = e.target.value.toLowerCase();
-     if (searchText !== ''){
-        const list= CountryList.filter((item)=>{
-          return item.country.toLowerCase().includes(searchText);
+     if (searchText !== '' && cities!== null){
+        const list= cities.filter((item)=>{
+          return item.toLowerCase().includes(searchText);
         })
-        setCountryList(list);
+        setCitiesList(list);
      }else{
-        setCountryList(Context.values.CountryList);
+        setCitiesList(cities);
      }
   
     
   }
-
     return(
         <>
 <Button className='countryDropdown' onClick={showDrop}> 
@@ -92,12 +101,14 @@ if (selectedCountry !== ''){
 
       <ul className='CountryList mt-3'>
         {
-            CountryList?.length!==0 && CountryList?.map((item,index)=>(
+            CitiesList?.length!==0 && CitiesList?.map((item,index)=>{
+              
+              return(
                 <li key={index}  >
-                   <Button className={`${selectedTab === item.country ? '_active' : ''}`} onClick={()=>selectCountry(index  , item.country)}>{item.country } </Button>
+                   <Button className={`${selectedTab === item? '_active' : ''}`} onClick={()=>selectCountry(index  , item)}>{item } </Button>
                     
                 </li>
-            ))
+            )})
         }
 
 

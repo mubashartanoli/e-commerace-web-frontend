@@ -5,9 +5,12 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { useLocation,useNavigate } from 'react-router-dom';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import StorefrontIcon from '@mui/icons-material/Storefront';
-import { useContext } from "react";
+import { useContext ,useState} from "react";
 import { MyContext } from '../../App';
-
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import BookOnlineIcon from '@mui/icons-material/BookOnline';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import { IoLogOut } from "react-icons/io5";
 
 
 const BottomNav =()=>{
@@ -18,8 +21,24 @@ const BottomNav =()=>{
  const  ShowSideBar  = Context.values.ShowSideBar;
   const  setShowSidebar  = Context.values.setShowSidebar;
   const  setProgress  = Context.values.setProgress;
+const setOpenS= Context.values.setsearchProductInPhone;
+const OpenS= Context.values.searchProductInPhone;
 
-
+  const [show,setshow]=useState(false);
+const ShowSubMenu=()=>{
+    setshow(!show)
+}
+const IoLogOutTo=()=>{
+   localStorage.setItem('UserId','');
+localStorage.setItem('Token','');
+navigate('/LoginPage')
+setshow(false);
+}
+  const searchP=()=>{
+  setProgress(30); 
+    setOpenS(!OpenS)
+    setProgress(100); 
+  }
   const gotoStore=()=>{
   
     setProgress(30); navigate('/Shop/All'); setProgress(100);
@@ -78,32 +97,39 @@ const BottomNav =()=>{
            ):
            (
              
-            <div className="menu_item">
+            <div className="menu_item" onClick={searchP}>
             <SearchIcon />
             <h6>Search</h6>
            </div>
            )}
       
         </li>
-        <li>
-            {location.pathname === '/'? (
-                   <div className="menu_item">
+        {
+           location.pathname === '/Cart' ||location.pathname === '/Orders'||location.pathname === '/MyAccount'
+           ||location.pathname === '/Whilist'||location.pathname === '/ProceedToCheckOut'?'':
+ <li>
+            {
+           
+            location.pathname === '/'? (
+                   <div className="menu_item" onClick={ShowSubMenu}>
             <PermIdentityIcon />
             <h6>Account</h6>
            </div>
             ):(
-                 <div className="menu_item">
+                 <div className="menu_item" onClick={searchP}>
             <SearchIcon />
             <h6>Search</h6>
            </div>
             )}
         
         </li>
+        }
+       
         <li>
             {location.pathname === '/'?(<div className="menu_item" onClick={gotoSideBar }>
             <MenuIcon />
             <h6>Categories</h6>
-           </div>):(<div className="menu_item">
+           </div>):(<div className="menu_item" onClick={ShowSubMenu}>
             <PermIdentityIcon />
             <h6>Account</h6>
            </div>) }
@@ -111,6 +137,14 @@ const BottomNav =()=>{
         </li>
        </ul>
         </div>  
+        <div className={`Account-list-Side-Bar ${show===true && 'Account-list-Side-Bar-show'}`}>
+<ul>
+    <li onClick={()=>{navigate('/MyAccount'); setshow(false)}} ><AccountCircleIcon/> Account page</li>
+    <li onClick={()=>{navigate('/Orders'); setshow(false)}}><BookOnlineIcon/> My Orders</li>
+    <li onClick={()=>{navigate('/Whilist'); setshow(false)}}><FavoriteIcon/> Whilist</li>
+    <li onClick={()=>{IoLogOutTo()}}><IoLogOut /> LogOut</li>
+</ul>
+        </div>
         </>
     )
 }

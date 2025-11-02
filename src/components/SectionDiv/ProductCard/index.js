@@ -9,13 +9,15 @@ import { AiOutlineFullscreen } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { MyContext } from '../../../App';
 import { useContext } from "react";
-
+import { MdFavorite } from "react-icons/md";
 
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination ,Autoplay} from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
+import {  fetchDataFromApi, postData } from "../../../utils/api";
+
 
 
 
@@ -24,16 +26,118 @@ const ProductCard=(props)=>{
     const Context = useContext(MyContext);
     const setProductDetailPopupId=Context.values.setProductDetailPopupId;
     const setShowCart=Context.values.setShowCart;
-
-
+    const setOpen=Context.values.setOpen;
+   const setProgress=Context.values.setProgress;
+   const setWhilistData=Context.values.setWhilistData;
+   const WhilistData=Context.values.WhilistData;
       const ShowProductDetail=(id)=>{
         setShowCart(true);
         setProductDetailPopupId(id);
       }
+
+
         const GotoProductDetailPage=(id)=>{
 navigate(`/ProductDetail/${id}`)
         }
-     
+
+
+        const RemoveToWhilist=(id)=>{
+setProgress(25)
+          const userId=localStorage.getItem('UserId');
+          if(userId==='null' || userId===undefined || userId===''){
+            navigate('/LoginPage')
+            setProgress(100)
+            return
+          }
+
+  postData('/api/Whilist/delete',{userId:userId,product:id}).then((res)=>{
+  
+    if(res.status===false){
+  setOpen({
+       status:true,
+       color:'#fa3e3e',
+       data:res.message
+     })
+     setProgress(100)
+     return
+    }
+fetchDataFromApi(`/api/Whilist/get/${userId}`).then((respon)=>{
+  setWhilistData(respon.Product)
+    setOpen({
+       status:true,
+       color:'#7958b6',
+       data:res.message
+     })
+      setProgress(100)
+}).catch((err)=>{
+    console.log(err)
+      setOpen({
+       status:true,
+       color:'#fa3e3e',
+       data:"Network Err In Fetching Whilist"
+     })
+})
+  
+  }).catch((err)=>{
+    setProgress(100)
+    console.log(err)
+      setOpen({
+       status:true,
+       color:'#fa3e3e',
+       data:"Product Can't added to Whilist Please Try Again"
+     })
+  })
+        }
+        const AddToWhilist=(id)=>{
+setProgress(25)
+          const userId=localStorage.getItem('UserId');
+          if(userId==='null' || userId===undefined || userId===''){
+            navigate('/LoginPage')
+            setProgress(100)
+            return
+          }
+
+  postData('/api/Whilist/add',{userId:userId,product:id}).then((res)=>{
+  
+    if(res.status===false){
+  setOpen({
+       status:true,
+       color:'#fa3e3e',
+       data:res.message
+     })
+     setProgress(100)
+     return
+    }
+fetchDataFromApi(`/api/Whilist/get/${userId}`).then((response)=>{
+  setWhilistData(response.Product)
+
+    setOpen({
+       status:true, 
+       color:'#7958b6',
+       data:res.message
+     })
+      setProgress(100)
+}).catch((err)=>{
+    console.log(err)
+      setOpen({
+       status:true,
+       color:'#fa3e3e',
+       data:"Network Err In Fetching Whilist"
+     })
+})
+  
+  }).catch((err)=>{
+    setProgress(100)
+    console.log(err)
+      setOpen({
+       status:true,
+       color:'#fa3e3e',
+       data:"Product Can't added to Whilist Please Try Again"
+     })
+  })
+        }
+        
+
     return(
         <>
  <div className="w-100 p-1">     
@@ -82,8 +186,19 @@ navigate(`/ProductDetail/${id}`)
 </div>
     {/* <img src={bannerFive} alt="banner" className='w-100' /> */}
     <div className='cart-hover-div'>
-    <div className='full-screen shadow d-flex align-items-center justify-content-center cursor'onClick={()=>{ShowProductDetail(props.data._id)}} ><AiOutlineFullscreen /></div>
-    <div className='favorite-cart shadow d-flex align-items-center justify-content-center cursor'><MdFavoriteBorder /></div>
+    <div className='full-screen shadow d-flex align-items-center justify-content-center cursor'
+    onClick={()=>{ShowProductDetail(props.data._id)}} ><AiOutlineFullscreen /></div>
+    {
+      WhilistData && WhilistData.find((item)=>item.product._id===props.data._id) ?
+      <div className='favorite-cart shadow d-flex align-items-center justify-content-center cursor'
+      onClick={()=>{RemoveToWhilist(props.data._id)}} 
+       ><MdFavorite />
+</div>
+      :
+      
+    <div className='favorite-cart shadow d-flex align-items-center justify-content-center cursor'
+    onClick={()=>{AddToWhilist(props.data._id)}}><MdFavoriteBorder /></div>
+    }
     </div>
     </div>
     

@@ -4,13 +4,16 @@ import { useState } from 'react';
 
 
 const ProductSizeButton=(props)=>{
-    const [activeBtn,setActiveBtn]= useState(null)
+    const [activeBtn,setActiveBtn]= useState()
+
 
     return(<>
     <div className=" ProductSizeButton w-100 ">
-        {props.data && props.data.length>0 && props.data.map((item)=>{
+        {props.data && props.data.length>0 && props.data.map((item,index)=>{
+        
             return(
-  <Button className={`ProductSizeBtn ${activeBtn===item &&'TableButton_Active' }`} onClick={()=>{setActiveBtn(item)}}  >{item}</Button>
+  <Button key={index} className={`ProductSizeBtn ${activeBtn===index &&'TableButton_Active' }`}
+   onClick={()=>{ setActiveBtn(index); props.act(item)}}  >{item}</Button>
             ) 
         })} 
    

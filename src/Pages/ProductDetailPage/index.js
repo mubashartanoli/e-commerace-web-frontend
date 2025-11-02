@@ -10,7 +10,7 @@ const ProductDetailPage =()=>{
     const context= useContext(MyContext)
     useEffect(()=>{
         context.values.setShowHeaderFooter(true)
-        window.scrollTo(0,0);
+        // window.scrollTo(0,0);
     },[context.values])
     return(<>
     
